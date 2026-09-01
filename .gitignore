@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.db
+backend/.env
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# Hardhat
+blockchain/artifacts/
+blockchain/cache/
+blockchain/typechain-types/
+
+# OS
+.DS_Store
+Thumbs.db
