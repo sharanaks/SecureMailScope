@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { to: "/dashboard", label: "Dashboard", icon: "\u25A4" },
   { to: "/scan/new", label: "New Scan", icon: "\u2295" },
   { to: "/history", label: "Scan History", icon: "\u29D6" },
+  { to: "/ai-assistant", label: "AI Assistant", icon: "\u2728" },
   { to: "/faq", label: "FAQ", icon: "?" },
 ];
 
@@ -37,11 +38,14 @@ export function Layout({ children, title, subtitle, actions }) {
   return (
     <div className="app-shell">
       <aside className="sidebar">
+
+        {/* BRAND */}
         <div className="brand">
           <div className="brand-mark">SM</div>
           SecureMailScope
         </div>
 
+        {/* NAVIGATION */}
         {NAV_ITEMS.map((item) => (
           <NavLink
             key={item.to}
@@ -55,34 +59,43 @@ export function Layout({ children, title, subtitle, actions }) {
           </NavLink>
         ))}
 
-        <div style={{ marginTop: "auto", paddingTop: 20 }}>
+        {/* SIDEBAR BOTTOM */}
+        <div className="sidebar-bottom">
+
+          {/* PROFILE */}
+          {email && (
+            <div className="profile-box">
+              <div className="profile-icon">
+                👤
+              </div>
+
+              <div className="profile-info">
+                <div className="profile-email">
+                  {email}
+                </div>
+                <div className="profile-label">
+                  Account
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* THEME BUTTON */}
           <button
-            className="btn btn-secondary"
-            style={{ width: "100%", marginBottom: 12 }}
+            className="btn btn-secondary theme-button"
             onClick={() => setDarkMode(!darkMode)}
           >
             {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
           </button>
 
-          {email && (
-            <div
-              style={{
-                fontSize: "0.78rem",
-                color: "var(--text-2)",
-                padding: "0 8px 10px",
-              }}
-            >
-              {email}
-            </div>
-          )}
-
+          {/* LOGOUT */}
           <button
-            className="btn btn-secondary"
-            style={{ width: "100%" }}
+            className="btn btn-secondary logout-button"
             onClick={handleLogout}
           >
             Log out
           </button>
+
         </div>
       </aside>
 
@@ -90,8 +103,17 @@ export function Layout({ children, title, subtitle, actions }) {
         {(title || actions) && (
           <div className="topbar">
             <div>
-              {title && <h1 className="page-title">{title}</h1>}
-              {subtitle && <p className="page-subtitle">{subtitle}</p>}
+              {title && (
+                <h1 className="page-title">
+                  {title}
+                </h1>
+              )}
+
+              {subtitle && (
+                <p className="page-subtitle">
+                  {subtitle}
+                </p>
+              )}
             </div>
 
             {actions}

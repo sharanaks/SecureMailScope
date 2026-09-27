@@ -11,6 +11,7 @@ import { VerificationPage } from "./pages/VerificationPage";
 import { HistoryPage } from "./pages/HistoryPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import FAQPage from "./pages/FAQPage";
+import { AIAssistantPage } from "./pages/AIAssistantPage";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/scan/new"
           element={
@@ -37,6 +39,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/scan/:id/results"
           element={
@@ -45,6 +48,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/scan/:id/recommendations"
           element={
@@ -53,6 +57,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/scan/:id/report"
           element={
@@ -61,6 +66,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/scan/:id/verify"
           element={
@@ -69,11 +75,22 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/history"
           element={
             <ProtectedRoute>
               <HistoryPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* AI Security Assistant */}
+        <Route
+          path="/ai-assistant"
+          element={
+            <ProtectedRoute>
+              <AIAssistantPage />
             </ProtectedRoute>
           }
         />

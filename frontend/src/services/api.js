@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
+const API_BASE =
+  import.meta.env.VITE_API_BASE || "http://localhost:8000";
 
 function authHeaders() {
   const token = localStorage.getItem("sms_token");
@@ -16,6 +17,7 @@ async function request(path, options = {}) {
   });
 
   let data = null;
+
   try {
     data = await res.json();
   } catch {
@@ -23,40 +25,87 @@ async function request(path, options = {}) {
   }
 
   if (!res.ok) {
-    const message = data?.detail || res.statusText || "Request failed";
-    throw new Error(typeof message === "string" ? message : JSON.stringify(message));
+    const message =
+      data?.detail || res.statusText || "Request failed";
+
+    throw new Error(
+      typeof message === "string"
+        ? message
+        : JSON.stringify(message)
+    );
   }
+
   return data;
 }
 
 export const api = {
+  // Health
   health: () => request("/api/health"),
 
+  // Authentication
   register: (email, password) =>
-    request("/api/auth/register", { method: "POST", body: JSON.stringify({ email, password }) }),
+    request("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    }),
 
   login: (email, password) =>
-    request("/api/auth/login", { method: "POST", body: JSON.stringify({ email, password }) }),
+    request("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    }),
 
+  // Security Scan
   scan: (domain, dkimSelector) =>
     request("/api/scan", {
       method: "POST",
-      body: JSON.stringify({ domain, dkim_selector: dkimSelector || null }),
+      body: JSON.stringify({
+        domain,
+        dkim_selector: dkimSelector || null,
+      }),
     }),
 
-  listAssessments: () => request("/api/assessments"),
+  // Assessments
+  listAssessments: () =>
+    request("/api/assessments"),
 
-  getAssessment: (id) => request(`/api/assessments/${id}`),
+  getAssessment: (id) =>
+    request(`/api/assessments/${id}`),
 
-  getReport: (id) => request(`/api/reports/${id}`),
+  // Reports
+  getReport: (id) =>
+    request(`/api/reports/${id}`),
 
   verifyReport: (id, report) =>
     request(`/api/reports/${id}/verify`, {
       method: "POST",
-      body: JSON.stringify(report ? { report } : {}),
+      body: JSON.stringify(
+        report ? { report } : {}
+      ),
     }),
 
-  anchorAssessment: (id) => request(`/api/blockchain/anchor/${id}`, { method: "POST" }),
+  // Blockchain
+  anchorAssessment: (id) =>
+    request(`/api/blockchain/anchor/${id}`, {
+      method: "POST",
+    }),
 
-  blockchainStatus: (id) => request(`/api/blockchain/status/${id}`),
+  blockchainStatus: (id) =>
+    request(`/api/blockchain/status/${id}`),
+
+  // AI Security Assistant
+  chat: (question, assessmentId = null) =>
+    request("/api/chat", {
+      method: "POST",
+      body: JSON.stringify({
+        question,
+        assessment_id: assessmentId,
+      }),
+    }),
 };
